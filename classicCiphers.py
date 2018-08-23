@@ -5,10 +5,13 @@
 - Description: Able to encrypt or decrypt a text file with a 
                variety of ciphers
 
+- TODO: Descriptions of algorithms used
+
 __author__ = "Anthony Panisales"
 
 - Resources:
-	https://pycipher.readthedocs.io/en/master/
+	http://www.practicalcryptography.com/ciphers/caesar-cipher/
+	https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
 
 """
 
@@ -56,6 +59,49 @@ class CaesarCipher:
 				newChar = self.letters[(self.letters.index(c) - key) % 26]
 			file.write(newChar)
 
+class VigenereCipher:
+
+	letters = []
+	for i in range(0, 26):
+ 		letters.append(chr(ord('A') + i))
+ 	key = []
+
+ 	def getKey(self):
+		""" TODO: Function Description """
+		while True:
+			try:
+				keyString = input("Key: ").upper()	
+				if not keyString.isalpha():
+					print("Not a valid key")
+					continue
+				else:
+					break    
+			except ValueError:
+				print("Not a valid key")
+				continue
+		
+		for c in keyString:
+			self.key.append(letters.index(c))
+
+
+	def encipher(self, oldFileText, file):
+		""" TODO: Function Description """
+		key = self.getKey()
+		keyIndex = 0
+		for c in oldFileText:
+			newChar = self.letters[self.letters.index(c) + key[keyIndex % len(key)]]
+			keyIndex += 1
+			file.write(newChar)
+
+	def decipher(self, oldFileText, file):
+		""" TODO: Function Description """
+		key = self.getKey()
+		keyIndex = 0
+		for c in oldFileText:
+			newChar = self.letters[self.letters.index(c) - key[index % len(key)]]
+			keyIndex += 1
+			file.write(newChar)
+
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 def classicCiphers():
@@ -63,8 +109,9 @@ def classicCiphers():
 
 @classicCiphers.command()
 @click.option('-c', is_flag=True, help='use the Caesar Cipher')
+@click.option('-v', is_flag=True, help='use the Vigenere Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def encrypt(c, **f):
+def encrypt(c, v, **f):
 	"""Encrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -72,18 +119,25 @@ def encrypt(c, **f):
 
 	file = open(f.get('file'), 'w')
 
-	# Use Caesar Cipher
+	cipher = None
+	
 	if c == True:
 		cipher = CaesarCipher()
-		cipher.encipher(oldFileText, file)
+	elif v == True:
+		cipher = VignereCipher()
 
-	
+	if cipher is not None:
+		cipher.decipher(oldFileText, file)
+	else:
+		file.write(oldFileText)
+
 	file.close()
 
 @classicCiphers.command()
 @click.option('-c', is_flag=True, help='use the Caesar Cipher')
+@click.option('-v', is_flag=True, help='use the Vigenere Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def decrypt(c, **f):
+def decrypt(c, v, **f):
 	"""Decrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -91,9 +145,14 @@ def decrypt(c, **f):
 
 	file = open(f.get('file'), 'w')
 
-	# Use Caesar Cipher
+	cipher = None
+
 	if c == True:
 		cipher = CaesarCipher()
+	elif v == True:
+		cipher = VignereCipher()
+
+	if cipher is not None:
 		cipher.decipher(oldFileText, file)
 	else:
 		file.write(oldFileText)
