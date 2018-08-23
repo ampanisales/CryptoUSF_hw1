@@ -162,6 +162,21 @@ class AffineCipher:
 				newChar = self.letters[(inverse * (self.letters.index(c) - b) % 26) % 26]
 			file.write(newChar)
 
+class AtbashCipher:
+
+	letters = []
+	for i in range(0, 26):
+ 		letters.append(chr(ord('A') + i))
+
+	def getKey(self):
+		""" TODO: Function Description """
+
+	def encipher(self, oldFileText, file):
+		""" TODO: Function Description """
+
+	def decipher(self, oldFileText, file):
+		""" TODO: Function Description """
+
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 def classicCiphers():
@@ -170,7 +185,8 @@ def classicCiphers():
 @classicCiphers.command()
 @click.option('-c', is_flag=True, help='use the Caesar Cipher')
 @click.option('-v', is_flag=True, help='use the Vigenere Cipher')
-@click.option('-a', is_flag=True, help='use the Affine Cipher')
+@click.option('-af', is_flag=True, help='use the Affine Cipher')
+@click.option('-at', is_flag=True, help='use the Atbash Cipher')
 @click.argument('file', type=click.Path(exists=True))
 def encrypt(c, v, a, **f):
 	"""Encrypts a file"""
@@ -187,8 +203,10 @@ def encrypt(c, v, a, **f):
 			cipher = CaesarCipher()
 		elif v == True:
 			cipher = VigenereCipher()
-		elif a == True:
+		elif af == True:
 			cipher = AffineCipher()
+		elif at == True:
+			cipher = AtbashCipher()
 
 		if cipher is not None:
 			cipher.encipher(oldFileText, file)
@@ -202,9 +220,10 @@ def encrypt(c, v, a, **f):
 @classicCiphers.command()
 @click.option('-c', is_flag=True, help='use the Caesar Cipher')
 @click.option('-v', is_flag=True, help='use the Vigenere Cipher')
-@click.option('-a', is_flag=True, help='use the Affine Cipher')
+@click.option('-af', is_flag=True, help='use the Affine Cipher')
+@click.option('-at', is_flag=True, help='use the Atbash Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def decrypt(c, v, a, **f):
+def decrypt(c, v, af, **f):
 	"""Decrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -215,12 +234,14 @@ def decrypt(c, v, a, **f):
 	cipher = None
 
 	try:
-		if c is True:
+		if c == True:
 			cipher = CaesarCipher()
 		elif v == True:
 			cipher = VigenereCipher()
-		elif a == True:
+		elif af == True:
 			cipher = AffineCipher()
+		elif at == True:
+			cipher = AtbashCipher()
 
 		if cipher is not None:
 			cipher.decipher(oldFileText, file)
