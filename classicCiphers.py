@@ -69,15 +69,11 @@ class VigenereCipher:
 	def getKey(self):
 		""" TODO: Function Description """
 		keyString = ""
-		while True:
+		while not keyString.isalpha():
 			keyString = input("Key: ").upper()	
 			if not keyString.isalpha():
 				print("Not a valid key")
-				continue
-			else:
-				print("valid key")
-				break
-		
+
 		for c in keyString:
 			self.key.append(self.letters.index(c))
 
@@ -85,18 +81,22 @@ class VigenereCipher:
 	def encipher(self, oldFileText, file):
 		""" TODO: Function Description """
 		keyIndex = 0
+		self.getKey()
 		for c in oldFileText:
-			self.getKey()
-			newChar = self.letters[self.letters.index(c) + self.key[keyIndex % len(self.key)]]
+			newChar = c
+			if c in self.letters:
+				newChar = self.letters[(self.letters.index(c) + self.key[keyIndex % len(self.key)]) % 26]
 			keyIndex += 1
 			file.write(newChar)
 
 	def decipher(self, oldFileText, file):
 		""" TODO: Function Description """
 		keyIndex = 0
+		self.getKey()
 		for c in oldFileText:
-			self.getKey()
-			newChar = self.letters[self.letters.index(c) - self.key[keyIndex % len(self.key)]]
+			newChar = c
+			if c in self.letters:
+				newChar = self.letters[(self.letters.index(c) - self.key[keyIndex % len(self.key)]) % 26]
 			keyIndex += 1
 			file.write(newChar)
 
