@@ -11,6 +11,7 @@ __author__ = "Anthony Panisales"
 
 - Resources:
 	http://www.practicalcryptography.com/ciphers/caesar-cipher/
+	www.practicalcryptography.com/ciphers/affine-cipher/
 	https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
 
 """
@@ -33,12 +34,12 @@ class CaesarCipher:
 			try:
 				key = int(input("Key (0-25): "))	
 				if key < 0 or key > 25:
-					print("Not a valid key")
+					print("Invalid key")
 					continue
 				else:
 					return key      
 			except ValueError:
-				print("Not a valid key")
+				print("Invalid key")
 				continue
 
 	def encipher(self, oldFileText, file):
@@ -72,7 +73,7 @@ class VigenereCipher:
 		while not keyString.isalpha():
 			keyString = input("Key: ").upper()	
 			if not keyString.isalpha():
-				print("Not a valid key")
+				print("Invalid key: The key should only contain letters")
 
 		for c in keyString:
 			self.key.append(self.letters.index(c))
@@ -100,6 +101,67 @@ class VigenereCipher:
 			keyIndex += 1
 			file.write(newChar)
 
+class AffineCipher:
+
+	letters = []
+	for i in range(0, 26):
+ 		letters.append(chr(ord('A') + i))
+
+	def getKey(self):
+		""" TODO: Function Description """
+		key = []
+		while True:
+			try:
+				a = int(input("a: "))	
+				if a < 0 or a % 2 == 0 or a == 13:
+					print("Invalid key: Must be a positive number less than and has no common factors with 26")
+					continue
+				else:
+					key.append(a)
+					break     
+			except ValueError:
+				print("Invalid key: Must be a positive number less than and has no common factors with 26")
+				continue
+
+		while True:
+			try:
+				b = int(input("b (0-25): "))	
+				if b < 0 or b > 25:
+					print("Invalid key")
+					continue
+				else:
+					key.append(b)
+					return key      
+			except ValueError:
+				print("Invalid key")
+				continue
+
+	def encipher(self, oldFileText, file):
+		""" TODO: Function Description """
+		key = self.getKey()
+		a = key[0]
+		b = key[1]
+		for c in oldFileText:
+			newChar = c
+			if c in self.letters:
+				newChar = self.letters[((self.letters.index(c) * a + b) % 26) % 26]
+			file.write(newChar)
+
+	def decipher(self, oldFileText, file):
+		""" TODO: Function Description """
+		key = self.getKey()
+		a = key[0]
+		b = key[1]
+		inverse = 0
+		for x in range(0, 27):
+			if (x * a) % 26 == 1:
+				inverse = x
+		for c in oldFileText:
+			newChar = c
+			if c in self.letters:
+				newChar = self.letters[(inverse * (self.letters.index(c) - b) % 26) % 26]
+			file.write(newChar)
+
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 def classicCiphers():
@@ -108,8 +170,9 @@ def classicCiphers():
 @classicCiphers.command()
 @click.option('-c', is_flag=True, help='use the Caesar Cipher')
 @click.option('-v', is_flag=True, help='use the Vigenere Cipher')
+@click.option('-a', is_flag=True, help='use the Affine Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def encrypt(c, v, **f):
+def encrypt(c, v, a, **f):
 	"""Encrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -119,14 +182,19 @@ def encrypt(c, v, **f):
 
 	cipher = None
 	
-	if c == True:
-		cipher = CaesarCipher()
-	elif v == True:
-		cipher = VigenereCipher()
+	try:
+		if c == True:
+			cipher = CaesarCipher()
+		elif v == True:
+			cipher = VigenereCipher()
+		elif a == True:
+			cipher = AffineCipher()
 
-	if cipher is not None:
-		cipher.encipher(oldFileText, file)
-	else:
+		if cipher is not None:
+			cipher.encipher(oldFileText, file)
+		else:
+			file.write(oldFileText)
+	except KeyboardInterrupt:
 		file.write(oldFileText)
 
 	file.close()
@@ -134,8 +202,9 @@ def encrypt(c, v, **f):
 @classicCiphers.command()
 @click.option('-c', is_flag=True, help='use the Caesar Cipher')
 @click.option('-v', is_flag=True, help='use the Vigenere Cipher')
+@click.option('-a', is_flag=True, help='use the Affine Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def decrypt(c, v, **f):
+def decrypt(c, v, a, **f):
 	"""Decrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -145,14 +214,19 @@ def decrypt(c, v, **f):
 
 	cipher = None
 
-	if c is True:
-		cipher = CaesarCipher()
-	elif v == True:
-		cipher = VigenereCipher()
+	try:
+		if c is True:
+			cipher = CaesarCipher()
+		elif v == True:
+			cipher = VigenereCipher()
+		elif a == True:
+			cipher = AffineCipher()
 
-	if cipher is not None:
-		cipher.decipher(oldFileText, file)
-	else:
+		if cipher is not None:
+			cipher.decipher(oldFileText, file)
+		else:
+			file.write(oldFileText)
+	except KeyboardInterrupt:
 		file.write(oldFileText)
 
 	file.close()
