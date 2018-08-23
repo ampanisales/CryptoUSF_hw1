@@ -64,41 +64,39 @@ class VigenereCipher:
 	letters = []
 	for i in range(0, 26):
  		letters.append(chr(ord('A') + i))
- 	key = []
+	key = []
 
- 	def getKey(self):
+	def getKey(self):
 		""" TODO: Function Description """
+		keyString = ""
 		while True:
-			try:
-				keyString = input("Key: ").upper()	
-				if not keyString.isalpha():
-					print("Not a valid key")
-					continue
-				else:
-					break    
-			except ValueError:
+			keyString = input("Key: ").upper()	
+			if not keyString.isalpha():
 				print("Not a valid key")
 				continue
+			else:
+				print("valid key")
+				break
 		
 		for c in keyString:
-			self.key.append(letters.index(c))
+			self.key.append(self.letters.index(c))
 
 
 	def encipher(self, oldFileText, file):
 		""" TODO: Function Description """
-		key = self.getKey()
 		keyIndex = 0
 		for c in oldFileText:
-			newChar = self.letters[self.letters.index(c) + key[keyIndex % len(key)]]
+			self.getKey()
+			newChar = self.letters[self.letters.index(c) + self.key[keyIndex % len(self.key)]]
 			keyIndex += 1
 			file.write(newChar)
 
 	def decipher(self, oldFileText, file):
 		""" TODO: Function Description """
-		key = self.getKey()
 		keyIndex = 0
 		for c in oldFileText:
-			newChar = self.letters[self.letters.index(c) - key[index % len(key)]]
+			self.getKey()
+			newChar = self.letters[self.letters.index(c) - self.key[keyIndex % len(self.key)]]
 			keyIndex += 1
 			file.write(newChar)
 
@@ -124,7 +122,7 @@ def encrypt(c, v, **f):
 	if c == True:
 		cipher = CaesarCipher()
 	elif v == True:
-		cipher = VignereCipher()
+		cipher = VigenereCipher()
 
 	if cipher is not None:
 		cipher.decipher(oldFileText, file)
@@ -150,7 +148,7 @@ def decrypt(c, v, **f):
 	if c == True:
 		cipher = CaesarCipher()
 	elif v == True:
-		cipher = VignereCipher()
+		cipher = VigenereCipher()
 
 	if cipher is not None:
 		cipher.decipher(oldFileText, file)
