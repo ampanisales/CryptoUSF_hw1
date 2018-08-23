@@ -125,7 +125,7 @@ def encrypt(c, v, **f):
 		cipher = VigenereCipher()
 
 	if cipher is not None:
-		cipher.decipher(oldFileText, file)
+		cipher.encipher(oldFileText, file)
 	else:
 		file.write(oldFileText)
 
@@ -145,7 +145,7 @@ def decrypt(c, v, **f):
 
 	cipher = None
 
-	if c == True:
+	if c is True:
 		cipher = CaesarCipher()
 	elif v == True:
 		cipher = VigenereCipher()
