@@ -70,9 +70,9 @@ class VigenereCipher(Cipher):
         to agree upon a key word, which causes the equivalents of the 
         plaintext letters to change as the key changes."
 
-	    Sources:
-	        "Friedman Lectures on Cryptography", 1965, page 29
-	        https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
+        Sources:
+            "Friedman Lectures on Cryptography", 1965, page 29
+            https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
 	"""
 	key = []
 
@@ -127,8 +127,8 @@ class AffineCipher(Cipher):
         ax = 1 (mod m)
 
         Sources:
-	    https://pycipher.readthedocs.io/en/master/#affine-cipher
-	    http://www.practicalcryptography.com/ciphers/affine-cipher/
+            https://pycipher.readthedocs.io/en/master/#affine-cipher
+            http://www.practicalcryptography.com/ciphers/affine-cipher/
 	"""
 
 	key = []
@@ -216,7 +216,7 @@ class SimpleSubstitutionCipher(Cipher):
         is replaced by a ﬁxed substitute, usually also a letter...
         The key is a permutation of the alphabet."
 
-        Cipher taken from
+        Sources:
             "The Mathamatical Theory of Cryptography", 1945, pages 31-32
             https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
             http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
