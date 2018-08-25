@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """ classicCiphers.py
-	Able to encrypt or decrypt a text file with a variety of ciphers
+    Able to encrypt or decrypt a text file with a variety of ciphers
 
 __author__ = "Anthony Panisales"
 
@@ -19,10 +19,10 @@ class Cipher(object):
 
 class CaesarCipher(Cipher):
 	""" In the Caesar Cipher, "each letter of the text is replaced
-		by the letter which stands a certain number of places
-		before or after it in the alphabet"
+        by the letter which stands a certain number of places
+        before or after it in the alphabet"
 
-		Sources:
+        Sources:
             "Manual of Cryptography", 1911, page 28
             https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
             http://www.practicalcryptography.com/ciphers/caesar-cipher/
@@ -64,15 +64,15 @@ class CaesarCipher(Cipher):
 
 class VigenereCipher(Cipher):
 	""" The Vigenere table "consists of a set of twenty-six alphabets 
-		successively displaced one letter per row, with the plaintext 
-		letters at the top of the square, the key letters at the side, 
-		and the cipher letters inside. The method of using the table is 
-		to agree upon a key word, which causes the equivalents of the 
-		plaintext letters to change as the key changes."
+        successively displaced one letter per row, with the plaintext 
+        letters at the top of the square, the key letters at the side, 
+        and the cipher letters inside. The method of using the table is 
+        to agree upon a key word, which causes the equivalents of the 
+        plaintext letters to change as the key changes."
 
-  		Sources:
-        	"Friedman Lectures on Cryptography", 1965, page 29
-        	https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
+	    Sources:
+	        "Friedman Lectures on Cryptography", 1965, page 29
+	        https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
 	"""
 	key = []
 
@@ -112,23 +112,23 @@ class VigenereCipher(Cipher):
 
 class AffineCipher(Cipher):
 	""" The 'key' for the Affine cipher consists of 2 numbers, we'll call 
-		them a and b. The following discussion assumes the use of a 26 character 
-		alphabet (m = 26). a should be chosen to be relatively prime to m (i.e. 
-		a should have no factors in common with m). b is an integer 0-25.
+        them a and b. The following discussion assumes the use of a 26 character 
+        alphabet (m = 26). a should be chosen to be relatively prime to m (i.e. 
+        a should have no factors in common with m). b is an integer 0-25.
 
-		The ciphertext letter c, for any given letter p is:
-		c = ap + b (mod m)
+        The ciphertext letter c, for any given letter p is:
+        c = ap + b (mod m)
 
-		The decryption function is: 
-		p = a^-1 (c - b) (mod m)
-		where a^-1 is the multiplicative inverse of a in the group of integers modulo m.
+        The decryption function is: 
+        p = a^-1 (c - b) (mod m)
+        where a^-1 is the multiplicative inverse of a in the group of integers modulo m.
 
-		To find a multiplicative inverse, we need to find a number x such that:
-		ax = 1 (mod m)
+        To find a multiplicative inverse, we need to find a number x such that:
+        ax = 1 (mod m)
 
-		Sources:
-			https://pycipher.readthedocs.io/en/master/#affine-cipher
-        	http://www.practicalcryptography.com/ciphers/affine-cipher/
+        Sources:
+	    https://pycipher.readthedocs.io/en/master/#affine-cipher
+	    http://www.practicalcryptography.com/ciphers/affine-cipher/
 	"""
 
 	key = []
@@ -190,10 +190,10 @@ class AffineCipher(Cipher):
 
 class AtbashCipher(Cipher):
 	""" The Atbash Cipher "consisted in writing the last
-		letter of the alphabet instead of the first letter,
-		and the last but one instead of the second, and so on."
+        letter of the alphabet instead of the first letter,
+        and the last but one instead of the second, and so on."
 
-		Sources:
+        Sources:
             "Cryptography", 1926, page 28
             http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
 	"""
@@ -213,10 +213,10 @@ class AtbashCipher(Cipher):
 
 class SimpleSubstitutionCipher(Cipher):
 	""" In the Simple Substitution Cipher, "each letter of the message
-		is replaced by a ﬁxed substitute, usually also a letter...
-		The key is a permutation of the alphabet."
+        is replaced by a ﬁxed substitute, usually also a letter...
+        The key is a permutation of the alphabet."
 
-		Cipher taken from
+        Cipher taken from
             "The Mathamatical Theory of Cryptography", 1945, pages 31-32
             https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
             http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
