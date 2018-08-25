@@ -4,16 +4,8 @@
 
 __author__ = "Anthony Panisales"
 
-- Resources:
-	http://www.practicalcryptography.com/ciphers/caesar-cipher/
-	www.practicalcryptography.com/ciphers/affine-cipher/
-	https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
-	http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
-
 """
 
-# from __future__ import print_function
-# from future.utils import python_2_unicode_compatible
 import click
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
@@ -26,7 +18,16 @@ class Cipher(object):
 	pass
 
 class CaesarCipher(Cipher):
-	""" TODO: Class Description """
+	""" In the Caesar Cipher, "each letter of the text is replaced
+		by the letter which stands a certain number of places
+		before or after it in the alphabet"
+
+		Sources:
+            "Manual of Cryptography", 1911, page 28
+            https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
+            http://www.practicalcryptography.com/ciphers/caesar-cipher/
+            https://pycipher.readthedocs.io/en/master/#caesar-cipher
+	"""
 
 	def getKey(self):
 		""" TODO: Function Description """
@@ -60,8 +61,19 @@ class CaesarCipher(Cipher):
 				newChar = self.letters[(self.letters.index(c) - key) % 26]
 			file.write(newChar)
 
+
 class VigenereCipher(Cipher):
-	""" TODO: Class Description """
+	""" The Vigenere table "consists of a set of twenty-six alphabets 
+		successively displaced one letter per row, with the plaintext 
+		letters at the top of the square, the key letters at the side, 
+		and the cipher letters inside. The method of using the table is 
+		to agree upon a key word, which causes the equivalents of the 
+		plaintext letters to change as the key changes."
+
+  		Sources:
+        	"Friedman Lectures on Cryptography", 1965, page 29
+        	https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
+	"""
 	key = []
 
 	def getKey(self):
@@ -97,12 +109,32 @@ class VigenereCipher(Cipher):
 			keyIndex += 1
 			file.write(newChar)
 
+
 class AffineCipher(Cipher):
-	""" TODO: Class Description """
+	""" The 'key' for the Affine cipher consists of 2 numbers, we'll call 
+		them a and b. The following discussion assumes the use of a 26 character 
+		alphabet (m = 26). a should be chosen to be relatively prime to m (i.e. 
+		a should have no factors in common with m). b is an integer 0-25.
+
+		The ciphertext letter c, for any given letter p is:
+		c = ap + b (mod m)
+
+		The decryption function is: 
+		p = a^-1 (c - b) (mod m)
+		where a^-1 is the multiplicative inverse of a in the group of integers modulo m.
+
+		To find a multiplicative inverse, we need to find a number x such that:
+		ax = 1 (mod m)
+
+		Sources:
+			https://pycipher.readthedocs.io/en/master/#affine-cipher
+        	http://www.practicalcryptography.com/ciphers/affine-cipher/
+	"""
+
+	key = []
 
 	def getKey(self):
 		""" TODO: Function Description """
-		key = []
 		while True:
 			try:
 				a = int(input("a: "))	
@@ -110,7 +142,7 @@ class AffineCipher(Cipher):
 					print("Invalid key: Must be a positive number less than and has no common factors with 26")
 					continue
 				else:
-					key.append(a)
+					self.key.append(a)
 					break     
 			except ValueError:
 				print("Invalid key: Must be a positive number less than and has no common factors with 26")
@@ -123,17 +155,17 @@ class AffineCipher(Cipher):
 					print("Invalid key")
 					continue
 				else:
-					key.append(b)
-					return key      
+					self.key.append(b)
+					return      
 			except ValueError:
 				print("Invalid key")
 				continue
 
 	def encipher(self, oldFileText, file):
 		""" TODO: Function Description """
-		key = self.getKey()
-		a = key[0]
-		b = key[1]
+		self.getKey()
+		a = self.key[0]
+		b = self.key[1]
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
@@ -142,9 +174,9 @@ class AffineCipher(Cipher):
 
 	def decipher(self, oldFileText, file):
 		""" TODO: Function Description """
-		key = self.getKey()
-		a = key[0]
-		b = key[1]
+		self.getKey()
+		a = self.key[0]
+		b = self.key[1]
 		inverse = 0
 		for x in range(0, 27):
 			if (x * a) % 26 == 1:
@@ -155,8 +187,16 @@ class AffineCipher(Cipher):
 				newChar = self.letters[(inverse * (self.letters.index(c) - b) % 26) % 26]
 			file.write(newChar)
 
+
 class AtbashCipher(Cipher):
-	""" TODO: Class Description """
+	""" The Atbash Cipher "consisted in writing the last
+		letter of the alphabet instead of the first letter,
+		and the last but one instead of the second, and so on."
+
+		Sources:
+            "Cryptography", 1926, page 28
+            http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
+	"""
 
 	def encipher(self, oldFileText, file):
 		""" TODO: Function Description """
@@ -170,11 +210,22 @@ class AtbashCipher(Cipher):
 		""" TODO: Function Description """
 		self.encipher(oldFileText, file)
 
+
 class SimpleSubstitutionCipher(Cipher):
+	""" In the Simple Substitution Cipher, "each letter of the message
+		is replaced by a ﬁxed substitute, usually also a letter...
+		The key is a permutation of the alphabet."
+
+		Cipher taken from
+            "The Mathamatical Theory of Cryptography", 1945, pages 31-32
+            https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
+            http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
+	"""
 
 	key = []
 
 	def getKey(self):
+		""" TODO: Function Description """
 		keyString = ""
 		while True:
 			keyString = input("Key: ").upper()	
