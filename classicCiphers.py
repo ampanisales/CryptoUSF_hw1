@@ -1,11 +1,6 @@
 #!/usr/bin/env python
-
 """ classicCiphers.py
-
-- Description: Able to encrypt or decrypt a text file with a 
-               variety of ciphers
-
-- TODO: Descriptions of algorithms used
+	Able to encrypt or decrypt a text file with a variety of ciphers
 
 __author__ = "Anthony Panisales"
 
@@ -13,6 +8,7 @@ __author__ = "Anthony Panisales"
 	http://www.practicalcryptography.com/ciphers/caesar-cipher/
 	www.practicalcryptography.com/ciphers/affine-cipher/
 	https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
+	http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
 
 """
 
@@ -22,24 +18,28 @@ import click
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
-class CaesarCipher:
-
+class Cipher(object):
+	""" Base class for the ciphers """
 	letters = []
 	for i in range(0, 26):
- 		letters.append(chr(ord('A') + i))
+		letters.append(chr(ord('A') + i))
+	pass
+
+class CaesarCipher(Cipher):
+	""" TODO: Class Description """
 
 	def getKey(self):
 		""" TODO: Function Description """
 		while True:
 			try:
-				key = int(input("Key (0-25): "))	
+				key = int(input("Shift value (0-25): "))	
 				if key < 0 or key > 25:
-					print("Invalid key")
+					print("Invalid value")
 					continue
 				else:
 					return key      
 			except ValueError:
-				print("Invalid key")
+				print("Invalid value")
 				continue
 
 	def encipher(self, oldFileText, file):
@@ -60,11 +60,8 @@ class CaesarCipher:
 				newChar = self.letters[(self.letters.index(c) - key) % 26]
 			file.write(newChar)
 
-class VigenereCipher:
-
-	letters = []
-	for i in range(0, 26):
- 		letters.append(chr(ord('A') + i))
+class VigenereCipher(Cipher):
+	""" TODO: Class Description """
 	key = []
 
 	def getKey(self):
@@ -77,7 +74,6 @@ class VigenereCipher:
 
 		for c in keyString:
 			self.key.append(self.letters.index(c))
-
 
 	def encipher(self, oldFileText, file):
 		""" TODO: Function Description """
@@ -101,11 +97,8 @@ class VigenereCipher:
 			keyIndex += 1
 			file.write(newChar)
 
-class AffineCipher:
-
-	letters = []
-	for i in range(0, 26):
- 		letters.append(chr(ord('A') + i))
+class AffineCipher(Cipher):
+	""" TODO: Class Description """
 
 	def getKey(self):
 		""" TODO: Function Description """
@@ -162,21 +155,59 @@ class AffineCipher:
 				newChar = self.letters[(inverse * (self.letters.index(c) - b) % 26) % 26]
 			file.write(newChar)
 
-class AtbashCipher:
-
-	letters = []
-	for i in range(0, 26):
- 		letters.append(chr(ord('A') + i))
-
-	def getKey(self):
-		""" TODO: Function Description """
+class AtbashCipher(Cipher):
+	""" TODO: Class Description """
 
 	def encipher(self, oldFileText, file):
 		""" TODO: Function Description """
+		for c in oldFileText:
+			newChar = c
+			if c in self.letters:
+				newChar = self.letters[25 - self.letters.index(c)]
+			file.write(newChar)
 
 	def decipher(self, oldFileText, file):
 		""" TODO: Function Description """
+		self.encipher(oldFileText, file)
 
+class SimpleSubstitutionCipher(Cipher):
+
+	key = []
+
+	def getKey(self):
+		keyString = ""
+		while True:
+			keyString = input("Key: ").upper()	
+			if not keyString.isalpha():
+				print("Invalid key: The key should only contain letters")
+				continue
+			if len(keyString) != 26:
+				print("Invalid key: The key must be 26 characters in length")
+				continue
+			for c in keyString:
+				self.key.append(c)
+			if len(self.key) != len(set(self.key)):
+				print("Invalid key: There should be no repeated characters in the key")
+				continue
+			break
+
+	def encipher(self, oldFileText, file):
+		""" TODO: Function Description """
+		self.getKey()
+		for c in oldFileText:
+			newChar = c
+			if c in self.letters:
+				newChar = self.key[self.letters.index(c)]
+			file.write(newChar)
+
+	def decipher(self, oldFileText, file):
+		""" TODO: Function Description """
+		self.getKey()
+		for c in oldFileText:
+			newChar = c
+			if c in self.letters:
+				newChar = self.letters[self.key.index(c)]
+			file.write(newChar)
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 def classicCiphers():
@@ -187,8 +218,9 @@ def classicCiphers():
 @click.option('-v', is_flag=True, help='use the Vigenere Cipher')
 @click.option('-af', is_flag=True, help='use the Affine Cipher')
 @click.option('-at', is_flag=True, help='use the Atbash Cipher')
+@click.option('-s', is_flag=True, help='use the Simple Substitution Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def encrypt(c, v, a, **f):
+def encrypt(c, v, af, at, s, **f):
 	"""Encrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -207,6 +239,8 @@ def encrypt(c, v, a, **f):
 			cipher = AffineCipher()
 		elif at == True:
 			cipher = AtbashCipher()
+		elif s == True:
+			cipher = SimpleSubstitutionCipher()
 
 		if cipher is not None:
 			cipher.encipher(oldFileText, file)
@@ -222,8 +256,9 @@ def encrypt(c, v, a, **f):
 @click.option('-v', is_flag=True, help='use the Vigenere Cipher')
 @click.option('-af', is_flag=True, help='use the Affine Cipher')
 @click.option('-at', is_flag=True, help='use the Atbash Cipher')
+@click.option('-s', is_flag=True, help='use the Simple Substitution Cipher')
 @click.argument('file', type=click.Path(exists=True))
-def decrypt(c, v, af, **f):
+def decrypt(c, v, af, at, s, **f):
 	"""Decrypts a file"""
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -242,6 +277,8 @@ def decrypt(c, v, af, **f):
 			cipher = AffineCipher()
 		elif at == True:
 			cipher = AtbashCipher()
+		elif s == True:
+			cipher = SimpleSubstitutionCipher()
 
 		if cipher is not None:
 			cipher.decipher(oldFileText, file)
