@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 """ classicCiphers.py
-    Able to encrypt or decrypt a text file with a variety of ciphers
+    A Python command-line program to encrypt or decrypt a file. This tool
+    is able to use a variety of ciphers to accomplish encryption or
+    decryption. Spcifically, the ciphers are:
+        - the Caesar cipher
+        - the Vigenere cipher
+        - the Affine cipher
+        - the Atbash ciper
+        - the Simple Substitution cipher
 
     Assignment: Classic Ciphers
 
@@ -19,7 +26,7 @@ class Cipher(object):
 
 class CaesarCipher(Cipher):
 	""" 
-	    In the Caesar Cipher, "each letter of the text is replaced
+	    In the Caesar cipher, "each letter of the text is replaced
 	    by the letter which stands a certain number of places
 	    before or after it in the alphabet".
 
@@ -269,7 +276,7 @@ class AffineCipher(Cipher):
 
 class AtbashCipher(Cipher):
 	""" 
-	    The Atbash Cipher "consisted in writing the last
+	    The Atbash cipher "consisted in writing the last
 	    letter of the alphabet instead of the first letter,
 	    and the last but one instead of the second, and so on."
 
@@ -317,7 +324,7 @@ class AtbashCipher(Cipher):
 
 class SimpleSubstitutionCipher(Cipher):
 	""" 
-	    In the Simple Substitution Cipher, "each letter of the message
+	    In the Simple Substitution cipher, "each letter of the message
 	    is replaced by a ﬁxed substitute, usually also a letter...
 	    The key is a permutation of the alphabet."
 
@@ -402,11 +409,11 @@ def classicCiphers():
 	pass
 
 @classicCiphers.command()
-@click.option('-c', is_flag=True, help='use the Caesar Cipher')
-@click.option('-v', is_flag=True, help='use the Vigenere Cipher')
-@click.option('-af', is_flag=True, help='use the Affine Cipher')
-@click.option('-at', is_flag=True, help='use the Atbash Cipher')
-@click.option('-s', is_flag=True, help='use the Simple Substitution Cipher')
+@click.option('-c', is_flag=True, help='use the Caesar cipher')
+@click.option('-v', is_flag=True, help='use the Vigenere cipher')
+@click.option('-af', is_flag=True, help='use the Affine cipher')
+@click.option('-at', is_flag=True, help='use the Atbash cipher')
+@click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.argument('file', type=click.Path(exists=True))
 def encrypt(c, v, af, at, s, **f):
 	""" 
@@ -415,15 +422,15 @@ def encrypt(c, v, af, at, s, **f):
 	    Parameters
 	    ----------
 	    c : bool
-	        Boolean flag for the Caesar Cipher. True if the user wants to use it
+	        Boolean flag for the Caesar cipher. True if the user wants to use it
 	    v : bool
-	        Boolean flag for the Vigenere Cipher. True if the user wants to use it
+	        Boolean flag for the Vigenere cipher. True if the user wants to use it
 	    af : bool
-	        Boolean flag for the Affine Cipher. True if the user wants to use it
+	        Boolean flag for the Affine cipher. True if the user wants to use it
 	    at : bool
-	        Boolean flag for the Atbash Cipher. True if the user wants to use it
+	        Boolean flag for the Atbash cipher. True if the user wants to use it
 	    s : bool
-	        Boolean flag for the Simple Substitution. True if the user wants to use it
+	        Boolean flag for the Simple Substitution cipher. True if the user wants to use it
 	    f : dict
 	        Dictionary object for the command line arguments that contains the input file
 
@@ -458,11 +465,11 @@ def encrypt(c, v, af, at, s, **f):
 	file.close()
 
 @classicCiphers.command()
-@click.option('-c', is_flag=True, help='use the Caesar Cipher')
-@click.option('-v', is_flag=True, help='use the Vigenere Cipher')
-@click.option('-af', is_flag=True, help='use the Affine Cipher')
-@click.option('-at', is_flag=True, help='use the Atbash Cipher')
-@click.option('-s', is_flag=True, help='use the Simple Substitution Cipher')
+@click.option('-c', is_flag=True, help='use the Caesar cipher')
+@click.option('-v', is_flag=True, help='use the Vigenere cipher')
+@click.option('-af', is_flag=True, help='use the Affine cipher')
+@click.option('-at', is_flag=True, help='use the Atbash cipher')
+@click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.argument('file', type=click.Path(exists=True))
 def decrypt(c, v, af, at, s, **f):
 	""" 
@@ -471,15 +478,15 @@ def decrypt(c, v, af, at, s, **f):
 	    Parameters
 	    ----------
 	    c : bool
-	        Boolean flag for the Caesar Cipher. True if the user wants to use it
+	        Boolean flag for the Caesar cipher. True if the user wants to use it
 	    v : bool
-	        Boolean flag for the Vigenere Cipher. True if the user wants to use it
+	        Boolean flag for the Vigenere cipher. True if the user wants to use it
 	    af : bool
-	        Boolean flag for the Affine Cipher. True if the user wants to use it
+	        Boolean flag for the Affine cipher. True if the user wants to use it
 	    at : bool
-	        Boolean flag for the Atbash Cipher. True if the user wants to use it
+	        Boolean flag for the Atbash cipher. True if the user wants to use it
 	    s : bool
-	        Boolean flag for the Simple Substitution. True if the user wants to use it
+	        Boolean flag for the Simple Substitution cipher. True if the user wants to use it
 	    f : dict
 	        Dictionary object for the command line arguments that contains the input file
 
