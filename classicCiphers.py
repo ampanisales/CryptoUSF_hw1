@@ -2,11 +2,11 @@
 """ classicCiphers.py
     A Python command-line program to encrypt or decrypt a file. This tool
     is able to use a variety of ciphers to accomplish encryption or
-    decryption. Spcifically, the ciphers are:
+    decryption. Specifically, the ciphers are:
         - the Caesar cipher
         - the Vigenere cipher
         - the Affine cipher
-        - the Atbash ciper
+        - the Atbash cipher
         - the Simple Substitution cipher
 
     Assignment: Classic Ciphers
