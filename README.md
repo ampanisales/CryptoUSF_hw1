@@ -59,9 +59,9 @@ Options:
 
 Example Usage:
 ```
-# To encrypt a file using the Caesar Cipher
+# To encrypt a file using the Caesar cipher
 py classicCiphers.py encrypt -c test.txt
 
-# To decrypt a file using the Caesar Cipher
+# To decrypt a file using the Caesar cipher
 py classicCiphers.py decrypt -c test.txt
 ```
