@@ -190,7 +190,6 @@ class AffineCipher(Cipher):
 	        https://pycipher.readthedocs.io/en/master/#affine-cipher
 	        http://www.practicalcryptography.com/ciphers/affine-cipher/
 	"""
-
 	key = []
 
 	def getKey(self):
@@ -333,7 +332,6 @@ class SimpleSubstitutionCipher(Cipher):
 	        https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
 	        http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
 	"""
-
 	key = []
 
 	def getKey(self):
@@ -416,25 +414,7 @@ def classicCiphers():
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.argument('file', type=click.Path(exists=True))
 def encrypt(c, v, af, at, s, **f):
-	""" 
-	    Encrypts a file using one of the available ciphers.
-
-	    Parameters
-	    ----------
-	    c : bool
-	        Boolean flag for the Caesar cipher. True if the user wants to use it
-	    v : bool
-	        Boolean flag for the Vigenere cipher. True if the user wants to use it
-	    af : bool
-	        Boolean flag for the Affine cipher. True if the user wants to use it
-	    at : bool
-	        Boolean flag for the Atbash cipher. True if the user wants to use it
-	    s : bool
-	        Boolean flag for the Simple Substitution cipher. True if the user wants to use it
-	    f : dict
-	        Dictionary object for the command line arguments that contains the input file
-
-	"""
+	""" Encrypts a file using one of the available ciphers. """
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
 	file.close()
@@ -472,25 +452,7 @@ def encrypt(c, v, af, at, s, **f):
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.argument('file', type=click.Path(exists=True))
 def decrypt(c, v, af, at, s, **f):
-	""" 
-	    Decrypts a file using one of the available ciphers.
-
-	    Parameters
-	    ----------
-	    c : bool
-	        Boolean flag for the Caesar cipher. True if the user wants to use it
-	    v : bool
-	        Boolean flag for the Vigenere cipher. True if the user wants to use it
-	    af : bool
-	        Boolean flag for the Affine cipher. True if the user wants to use it
-	    at : bool
-	        Boolean flag for the Atbash cipher. True if the user wants to use it
-	    s : bool
-	        Boolean flag for the Simple Substitution cipher. True if the user wants to use it
-	    f : dict
-	        Dictionary object for the command line arguments that contains the input file
-
-	"""
+	""" Decrypts a file using one of the available ciphers. """
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
 	file.close()
