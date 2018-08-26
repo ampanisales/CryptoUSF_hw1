@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """ classicCiphers.py
-	Able to encrypt or decrypt a text file with a variety of ciphers
+    Able to encrypt or decrypt a text file with a variety of ciphers
 
-	Assignment: Classic Ciphers
+    Assignment: Classic Ciphers
 
 __author__ = "Anthony Panisales"
 
@@ -18,7 +18,8 @@ class Cipher(object):
 	pass
 
 class CaesarCipher(Cipher):
-	""" In the Caesar Cipher, "each letter of the text is replaced
+	""" 
+	    In the Caesar Cipher, "each letter of the text is replaced
         by the letter which stands a certain number of places
         before or after it in the alphabet"
 
@@ -91,7 +92,8 @@ class CaesarCipher(Cipher):
 
 
 class VigenereCipher(Cipher):
-	""" The Vigenere table "consists of a set of twenty-six alphabets 
+	""" 
+	    The Vigenere table "consists of a set of twenty-six alphabets 
         successively displaced one letter per row, with the plaintext 
         letters at the top of the square, the key letters at the side, 
         and the cipher letters inside. The method of using the table is 
@@ -161,7 +163,8 @@ class VigenereCipher(Cipher):
 
 
 class AffineCipher(Cipher):
-	""" The 'key' for the Affine cipher consists of 2 numbers, we'll call 
+	""" 
+	    The 'key' for the Affine cipher consists of 2 numbers, we'll call 
         them a and b. The following discussion assumes the use of a 26 character 
         alphabet (m = 26). a should be chosen to be relatively prime to m (i.e. 
         a should have no factors in common with m). b is an integer 0-25.
@@ -265,7 +268,8 @@ class AffineCipher(Cipher):
 
 
 class AtbashCipher(Cipher):
-	""" The Atbash Cipher "consisted in writing the last
+	""" 
+	    The Atbash Cipher "consisted in writing the last
         letter of the alphabet instead of the first letter,
         and the last but one instead of the second, and so on."
 
@@ -312,7 +316,8 @@ class AtbashCipher(Cipher):
 
 
 class SimpleSubstitutionCipher(Cipher):
-	""" In the Simple Substitution Cipher, "each letter of the message
+	""" 
+	    In the Simple Substitution Cipher, "each letter of the message
         is replaced by a ﬁxed substitute, usually also a letter...
         The key is a permutation of the alphabet."
 
