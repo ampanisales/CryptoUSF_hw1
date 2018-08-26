@@ -11,7 +11,7 @@ __author__ = "Anthony Panisales"
 import click
 
 class Cipher(object):
-	""" Base class for the ciphers """
+	""" Base class for the ciphers. """
 	letters = []
 	for i in range(0, 26):
 		letters.append(chr(ord('A') + i))
@@ -21,7 +21,7 @@ class CaesarCipher(Cipher):
 	""" 
 	    In the Caesar Cipher, "each letter of the text is replaced
 	    by the letter which stands a certain number of places
-	    before or after it in the alphabet"
+	    before or after it in the alphabet".
 
 	    Sources:
 	        "Manual of Cryptography", 1911, page 28
@@ -330,7 +330,7 @@ class SimpleSubstitutionCipher(Cipher):
 	key = []
 
 	def getKey(self):
-		""" Retrieves the key/cipher alphabet from the user """
+		""" Retrieves the key/cipher alphabet from the user. """
 		keyString = ""
 		while True:
 			keyString = input("Key: ").upper()	
@@ -398,7 +398,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 def classicCiphers():
-	""" A tool that can encrypt or decrypt a text file with a variety of ciphers """
+	""" A tool that can encrypt or decrypt a text file with a variety of ciphers. """
 	pass
 
 @classicCiphers.command()
@@ -410,7 +410,7 @@ def classicCiphers():
 @click.argument('file', type=click.Path(exists=True))
 def encrypt(c, v, af, at, s, **f):
 	""" 
-	    Encrypts a file using one of the available ciphers 
+	    Encrypts a file using one of the available ciphers.
 
 	    Parameters
 	    ----------
@@ -466,7 +466,7 @@ def encrypt(c, v, af, at, s, **f):
 @click.argument('file', type=click.Path(exists=True))
 def decrypt(c, v, af, at, s, **f):
 	""" 
-	    Decrypts a file using one of the available ciphers 
+	    Decrypts a file using one of the available ciphers.
 
 	    Parameters
 	    ----------
