@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """ classicCiphers.py
-    A Python command-line program to encrypt or decrypt a file. This tool
-    is able to use a variety of ciphers to accomplish encryption or
-    decryption. Specifically, the ciphers are:
+    A Python command-line program to encrypt or decrypt a text file. 
+    This tool is able to use a variety of ciphers to accomplish encryption
+    or decryption. Specifically, the ciphers are:
         - the Caesar cipher
         - the Vigenere cipher
         - the Affine cipher
