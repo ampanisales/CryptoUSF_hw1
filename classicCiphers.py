@@ -403,8 +403,9 @@ class ColumnarTranspositionCipher(Cipher):
 	    The Simple Columnar Transposition cipher "is usually based on a keyword mixed 
 	    sequence. The keyword determines the width of the matrix that is used. The keyword 
 	    is written as the first row of a matrix and the rest of the sequence is written 
-	    beneath it, taking as many rows as necessary. The transposition mixed sequence is 
-	    then produced by extracting the columns of the matrix from left to right.
+	    beneath it, taking as many rows as necessary." The transposition sequence is 
+	    then produced by sorting the letters of the keyword by alphabetical order, then
+	    extracting the columns of the matrix from left to right.
 
 	    Sources:
 	       "Basic Cryptanalysis", 1970, pages 4-2, 4-3
