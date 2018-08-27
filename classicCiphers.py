@@ -306,14 +306,12 @@ class AtbashCipher(Cipher):
 	    The Atbash cipher "consisted in writing the last
 	    letter of the alphabet instead of the first letter,
 	    and the last but one instead of the second, and so on."
+	    No key is needed for this cipher.
 
 	    Sources:
 	        "Cryptography", 1926, page 28
 	        http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
 	"""
-	def __init__(self, key):
-		if key is not None:
-			print("A key is not needed for the Atbash Cipher, so the file was encrypted/decrypted without it")
 
 	def encipher(self, oldFileText, file):
 		""" 
@@ -590,7 +588,7 @@ def encrypt(c, v, af, at, s, t, key, a, b, **f):
 		elif af == True:
 			cipher = AffineCipher(a, b)
 		elif at == True:
-			cipher = AtbashCipher(key)
+			cipher = AtbashCipher()
 		elif s == True:
 			cipher = SimpleSubstitutionCipher(key)
 		elif t == True:
@@ -634,7 +632,7 @@ def decrypt(c, v, af, at, s, t, key, a, b, **f):
 		elif af == True:
 			cipher = AffineCipher(a, b)
 		elif at == True:
-			cipher = AtbashCipher(key)
+			cipher = AtbashCipher()
 		elif s == True:
 			cipher = SimpleSubstitutionCipher(key)
 		elif t == True:
