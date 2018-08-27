@@ -418,10 +418,11 @@ class ColumnarTranspositionCipher(Cipher):
 				print("Invalid key: The key should only contain letters")
 
 		for c in keyword:
-			self.lettersInKeyword.append(c)
-			self.columns[c] = []
-
-
+			i = 1
+			while c + str(i) in self.lettersInKeyword:
+				i += 1
+			self.lettersInKeyword.append(c + str(i))
+			self.columns[c + str(i)] = []
 
 	def encipher(self, oldFileText, file):
 		""" 
@@ -490,10 +491,13 @@ class ColumnarTranspositionCipher(Cipher):
 			currentList.append(currentTextChar)
 			self.columns[currentKeyChar] = currentList
 
+		print(str(self.columns))
+
 		for row in range(0, columnSize):
 			for letter in self.lettersInKeyword:
 				currentList = self.columns.get(letter)
-				file.write(currentList[row])
+				if len(currentList) != 0:
+					file.write(currentList[row])
 
 
 # --- click command-line interface code ----------------------------	
