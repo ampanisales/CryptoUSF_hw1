@@ -21,20 +21,20 @@ A Python command-line program to encrypt or decrypt a text file.
 	    - https://pycipher.readthedocs.io/en/master/#caesar-cipher
     - Vigenere cipher
         - "Friedman Lectures on Cryptography", 1965, page 29
-	- https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
+	    - https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
     - Affine cipher
         - https://pycipher.readthedocs.io/en/master/#affine-cipher
-	- http://www.practicalcryptography.com/ciphers/affine-cipher/
+	    - http://www.practicalcryptography.com/ciphers/affine-cipher/
     - Atbash cipher
         - "Cryptography", 1926, page 28
-	- http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
+	    - http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
     - Simple Substitution cipher
         - "The Mathamatical Theory of Cryptography", 1945, pages 31-32
-	- https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
-	- http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
+	    - https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
+	    - http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
     - Simple Columnar Transposition cipher
         - "Basic Cryptanalysis", 1970, pages 4-2, 4-3
-	- www.practicalcryptography.com/ciphers/classical-era/columnar-transposition/
+	    - www.practicalcryptography.com/ciphers/classical-era/columnar-transposition/
     
 Help:
 ```
