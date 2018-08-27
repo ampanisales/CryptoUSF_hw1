@@ -8,7 +8,7 @@
         - the Affine cipher
         - the Atbash cipher
         - the Simple Substitution cipher
-        - the Columnar Transpostion cipher
+        - the Simple Columnar Transposition cipher
 
     Assignment: Classic Ciphers
 
@@ -400,9 +400,14 @@ class SimpleSubstitutionCipher(Cipher):
 
 class ColumnarTranspositionCipher(Cipher):
 	""" 
-	    In the Columnar Transposition cipher,
+	    The Simple Columnar Transposition cipher "is usually based on a keyword mixed 
+	    sequence. The keyword determines the width of the matrix that is used. The keyword 
+	    is written as the first row of a matrix and the rest of the sequence is written 
+	    beneath it, taking as many rows as necessary. The transposition mixed sequence is 
+	    then produced by extracting the columns of the matrix from left to right.
 
 	    Sources:
+	       "Basic Cryptanalysis", 1970, pages 4-2, 4-3
 	        www.practicalcryptography.com/ciphers/classical-era/columnar-transposition/
 
 	"""
@@ -426,7 +431,7 @@ class ColumnarTranspositionCipher(Cipher):
 
 	def encipher(self, oldFileText, file):
 		""" 
-		    Encrypts the file by .  
+		    Encrypts the file using the user's desired keyword.
 
 		    Parameters
 		    ----------
@@ -464,7 +469,7 @@ class ColumnarTranspositionCipher(Cipher):
 
 	def decipher(self, oldFileText, file):
 		""" 
-		    Decrypts the file by .  
+		    Decrypts the file using the user's desired keyword.  
 
 		    Parameters
 		    ----------
