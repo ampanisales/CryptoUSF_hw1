@@ -214,7 +214,6 @@ class AffineCipher(Cipher):
 
 	def __init__(self, a, b):
 		self.a = a
-		print(self.a)
 		self.b = b
 
 	def getKey(self):
@@ -242,7 +241,6 @@ class AffineCipher(Cipher):
 					self.b = int(input("b (0-25): "))
 				else:
 					self.b = int(self.b)
-					print(str(self.a))	
 				if self.b < 0 or self.b > 25:
 					print("Invalid key")
 					self.b = None
