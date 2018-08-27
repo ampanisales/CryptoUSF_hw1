@@ -117,7 +117,7 @@ class VigenereCipher(Cipher):
 		""" Retrieves the user's desired keyword. """
 		keyString = ""
 		while not keyString.isalpha():
-			keyString = input("Key: ").upper()	
+			keyString = input("Keyword: ").upper()	
 			if not keyString.isalpha():
 				print("Invalid key: The key should only contain letters")
 
@@ -338,7 +338,7 @@ class SimpleSubstitutionCipher(Cipher):
 		""" Retrieves the key/cipher alphabet from the user. """
 		keyString = ""
 		while True:
-			keyString = input("Key: ").upper()	
+			keyString = input("Key/cipher alphabet: ").upper()	
 			if not keyString.isalpha():
 				print("Invalid key: The key should only contain letters")
 				continue
