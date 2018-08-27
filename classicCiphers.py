@@ -38,19 +38,27 @@ class CaesarCipher(Cipher):
 	        http://www.practicalcryptography.com/ciphers/caesar-cipher/
 	        https://pycipher.readthedocs.io/en/master/#caesar-cipher
 	"""
+	argKey = None
+
+	def __init__(self, key):
+		self.argKey = key
 
 	def getKey(self):
 		""" Retrieves the user's desired shift value. """
 		while True:
 			try:
-				key = int(input("Shift value (0-25): "))	
-				if key < 0 or key > 25:
+				if self.argKey is not None:
+					shift = int(self.argKey)
+				else:
+					shift = int(input("Shift value (0-25): "))	
+				if shift < 0 or shift > 25:
 					print("Invalid value")
 					continue
 				else:
-					return key      
+					return shift      
 			except ValueError:
 				print("Invalid value")
+				self.argKey = None
 				continue
 
 	def encipher(self, oldFileText, file):
@@ -113,18 +121,24 @@ class VigenereCipher(Cipher):
 	        "Friedman Lectures on Cryptography", 1965, page 29
 	        https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
 	"""
-	key = []
+	keyPositions = []
+	argKey = None
+
+	def __init__(self, key):
+		self.argKey = key.upper()
 
 	def getKey(self):
 		""" Retrieves the user's desired keyword. """
-		keyword = ""
-		while not keyword.isalpha():
+		keyword = self.argKey
+		if not keyword.isalpha():
+			print("Invalid key: The key should only contain letters")
+		while keyword is None or not keyword.isalpha():
 			keyword = input("Keyword: ").upper()	
 			if not keyword.isalpha():
 				print("Invalid key: The key should only contain letters")
 
 		for c in keyword:
-			self.key.append(self.letters.index(c))
+			self.keyPositions.append(self.letters.index(c))
 
 	def encipher(self, oldFileText, file):
 		""" 
@@ -144,7 +158,8 @@ class VigenereCipher(Cipher):
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
-				newChar = self.letters[(self.letters.index(c) + self.key[keyIndex % len(self.key)]) % 26]
+				newChar = self.letters[(self.letters.index(c) + 
+					self.keyPositions[keyIndex % len(self.keyPositions)]) % 26]
 			keyIndex += 1
 			file.write(newChar)
 
@@ -166,7 +181,8 @@ class VigenereCipher(Cipher):
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
-				newChar = self.letters[(self.letters.index(c) - self.key[keyIndex % len(self.key)]) % 26]
+				newChar = self.letters[(self.letters.index(c) - 
+					self.keyPositions[keyIndex % len(self.keyPositions)]) % 26]
 			keyIndex += 1
 			file.write(newChar)
 
@@ -192,34 +208,50 @@ class AffineCipher(Cipher):
 	        https://pycipher.readthedocs.io/en/master/#affine-cipher
 	        http://www.practicalcryptography.com/ciphers/affine-cipher/
 	"""
-	key = []
+	a = 0
+	b = 0
+	argKey = None
+
+	def __init__(self, a, b):
+		self.a = a
+		print(self.a)
+		self.b = b
 
 	def getKey(self):
 		""" Retrieves the user's desired values for a and b. """
 		while True:
 			try:
-				a = int(input("a: "))	
-				if a < 0 or a % 2 == 0 or a == 13:
+				if self.a is None:
+					self.a = int(input("a: "))	
+				else:
+					self.a = int(self.a)
+				if self.a < 0 or self.a % 2 == 0 or self.a == 13:
 					print("Invalid key: Must be a positive number less than and has no common factors with 26")
+					self.a = None
 					continue
 				else:
-					self.key.append(a)
 					break     
 			except ValueError:
 				print("Invalid key: Must be a positive number less than and has no common factors with 26")
+				self.a = None
 				continue
 
 		while True:
 			try:
-				b = int(input("b (0-25): "))	
-				if b < 0 or b > 25:
+				if self.b is None:	
+					self.b = int(input("b (0-25): "))
+				else:
+					self.b = int(self.b)
+					print(str(self.a))	
+				if self.b < 0 or self.b > 25:
 					print("Invalid key")
+					self.b = None
 					continue
 				else:
-					self.key.append(b)
 					return      
 			except ValueError:
 				print("Invalid key")
+				self.b = None
 				continue
 
 	def encipher(self, oldFileText, file):
@@ -238,12 +270,10 @@ class AffineCipher(Cipher):
 
 		"""
 		self.getKey()
-		a = self.key[0]
-		b = self.key[1]
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
-				newChar = self.letters[((self.letters.index(c) * a + b) % 26) % 26]
+				newChar = self.letters[((self.letters.index(c) * self.a + self.b) % 26) % 26]
 			file.write(newChar)
 
 	def decipher(self, oldFileText, file):
@@ -262,16 +292,14 @@ class AffineCipher(Cipher):
 
 		"""
 		self.getKey()
-		a = self.key[0]
-		b = self.key[1]
 		inverse = 0
 		for x in range(0, 27):
-			if (x * a) % 26 == 1:
+			if (x * self.a) % 26 == 1:
 				inverse = x
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
-				newChar = self.letters[(inverse * (self.letters.index(c) - b) % 26) % 26]
+				newChar = self.letters[(inverse * (self.letters.index(c) - self.b) % 26) % 26]
 			file.write(newChar)
 
 
@@ -285,6 +313,9 @@ class AtbashCipher(Cipher):
 	        "Cryptography", 1926, page 28
 	        http://www.practicalcryptography.com/ciphers/classical-era/atbash-cipher/
 	"""
+	def __init__(self, key):
+		if key is not None:
+			print("A key is not needed for the Atbash Cipher, so the file was encrypted/decrypted without it")
 
 	def encipher(self, oldFileText, file):
 		""" 
@@ -334,24 +365,34 @@ class SimpleSubstitutionCipher(Cipher):
 	        https://pycipher.readthedocs.io/en/master/#simple-substitution-cipher
 	        http://www.practicalcryptography.com/ciphers/simple-substitution-cipher/
 	"""
-	key = []
+	keyAlpha = []
+	argKey = None
+
+	def __init__(self, key):
+		self.argKey = key
 
 	def getKey(self):
 		""" Retrieves the key/cipher alphabet from the user. """
-		keyString = ""
+		keyString = self.argKey
 		while True:
-			keyString = input("Key/cipher alphabet: ").upper()	
+			if keyString is None:
+				keyString = input("Key/cipher alphabet: ").upper()
+			else:
+				keyString = keyString.upper()	
 			if not keyString.isalpha():
 				print("Invalid key: The key should only contain letters")
+				keyString = None
 				continue
 			if len(keyString) != 26:
 				print("Invalid key: The key must be 26 characters in length")
+				keyString = None
 				continue
 			for c in keyString:
-				self.key.append(c)
-			if len(self.key) != len(set(self.key)):
+				self.keyAlpha.append(c)
+			if len(self.keyAlpha) != len(set(self.keyAlpha)):
 				print("Invalid key: There should be no repeated characters in the key")
-				self.key = []
+				keyString = None
+				self.keyAlpha = []
 				continue
 			break
 
@@ -374,7 +415,7 @@ class SimpleSubstitutionCipher(Cipher):
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
-				newChar = self.key[self.letters.index(c)]
+				newChar = self.keyAlpha[self.letters.index(c)]
 			file.write(newChar)
 
 	def decipher(self, oldFileText, file):
@@ -395,7 +436,7 @@ class SimpleSubstitutionCipher(Cipher):
 		for c in oldFileText:
 			newChar = c
 			if c in self.letters:
-				newChar = self.letters[self.key.index(c)]
+				newChar = self.letters[self.keyAlpha.index(c)]
 			file.write(newChar)
 
 class ColumnarTranspositionCipher(Cipher):
@@ -414,12 +455,21 @@ class ColumnarTranspositionCipher(Cipher):
 	"""
 	lettersInKeyword = []
 	columns = {}
+	argKey = None
+
+	def __init__(self, key):
+		self.argKey = key
 
 	def getKey(self):
 		""" Retrieves the user's desired keyword. """
-		keyword = ""
-		while not keyword.isalpha():
-			keyword = input("Keyword: ")	
+		keyword = self.argKey
+		if keyword is not None and not keyword.isalpha():
+			print("Invalid key: The key should only contain letters")
+		else:
+			keyword = keyword.upper()
+			
+		while keyword is None or not keyword.isalpha():
+			keyword = input("Keyword: ").upper()	
 			if not keyword.isalpha():
 				print("Invalid key: The key should only contain letters")
 
@@ -497,8 +547,6 @@ class ColumnarTranspositionCipher(Cipher):
 			currentList.append(currentTextChar)
 			self.columns[currentKeyChar] = currentList
 
-		print(str(self.columns))
-
 		for row in range(0, columnSize):
 			for letter in self.lettersInKeyword:
 				currentList = self.columns.get(letter)
@@ -522,8 +570,11 @@ def classicCiphers():
 @click.option('-at', is_flag=True, help='use the Atbash cipher')
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
+@click.option('-k', '--key', help='The key needed for the cipher.')
+@click.option('--a', help='The \'a\' variable need for the Affine cipher')
+@click.option('--b', help='The \'b\' variable need for the Affine cipher')
 @click.argument('file', type=click.Path(exists=True))
-def encrypt(c, v, af, at, s, t, **f):
+def encrypt(c, v, af, at, s, t, key, a, b, **f):
 	""" Encrypts a file using one of the available ciphers. """
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -535,17 +586,17 @@ def encrypt(c, v, af, at, s, t, **f):
 	
 	try:
 		if c == True:
-			cipher = CaesarCipher()
+			cipher = CaesarCipher(key)
 		elif v == True:
-			cipher = VigenereCipher()
+			cipher = VigenereCipher(key)
 		elif af == True:
-			cipher = AffineCipher()
+			cipher = AffineCipher(a, b)
 		elif at == True:
-			cipher = AtbashCipher()
+			cipher = AtbashCipher(key)
 		elif s == True:
-			cipher = SimpleSubstitutionCipher()
+			cipher = SimpleSubstitutionCipher(key)
 		elif t == True:
-			cipher = ColumnarTranspositionCipher()
+			cipher = ColumnarTranspositionCipher(key)
 
 		if cipher is not None:
 			cipher.encipher(oldFileText, file)
@@ -563,8 +614,11 @@ def encrypt(c, v, af, at, s, t, **f):
 @click.option('-at', is_flag=True, help='use the Atbash cipher')
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
+@click.option('-k', '--key', help='The key needed for the cipher.')
+@click.option('--a', help='The \'a\' variable need for the Affine cipher')
+@click.option('--b', help='The \'b\' variable need for the Affine cipher')
 @click.argument('file', type=click.Path(exists=True))
-def decrypt(c, v, af, at, s, t, **f):
+def decrypt(c, v, af, at, s, t, key, a, b, **f):
 	""" Decrypts a file using one of the available ciphers. """
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -576,17 +630,17 @@ def decrypt(c, v, af, at, s, t, **f):
 
 	try:
 		if c == True:
-			cipher = CaesarCipher()
+			cipher = CaesarCipher(key)
 		elif v == True:
-			cipher = VigenereCipher()
+			cipher = VigenereCipher(key)
 		elif af == True:
-			cipher = AffineCipher()
+			cipher = AffineCipher(a, b)
 		elif at == True:
-			cipher = AtbashCipher()
+			cipher = AtbashCipher(key)
 		elif s == True:
-			cipher = SimpleSubstitutionCipher()
+			cipher = SimpleSubstitutionCipher(key)
 		elif t == True:
-			cipher = ColumnarTranspositionCipher()
+			cipher = ColumnarTranspositionCipher(key)
 
 		if cipher is not None:
 			cipher.decipher(oldFileText, file)
