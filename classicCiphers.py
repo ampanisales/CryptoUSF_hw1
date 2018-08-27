@@ -8,6 +8,7 @@
         - the Affine cipher
         - the Atbash cipher
         - the Simple Substitution cipher
+        - the Columnar Transpostion cipher
 
     Assignment: Classic Ciphers
 
@@ -15,6 +16,7 @@ __author__ = "Anthony Panisales"
 
 """
 
+from math import ceil
 import click
 
 class Cipher(object):
@@ -115,13 +117,13 @@ class VigenereCipher(Cipher):
 
 	def getKey(self):
 		""" Retrieves the user's desired keyword. """
-		keyString = ""
-		while not keyString.isalpha():
-			keyString = input("Keyword: ").upper()	
-			if not keyString.isalpha():
+		keyword = ""
+		while not keyword.isalpha():
+			keyword = input("Keyword: ").upper()	
+			if not keyword.isalpha():
 				print("Invalid key: The key should only contain letters")
 
-		for c in keyString:
+		for c in keyword:
 			self.key.append(self.letters.index(c))
 
 	def encipher(self, oldFileText, file):
@@ -396,6 +398,103 @@ class SimpleSubstitutionCipher(Cipher):
 				newChar = self.letters[self.key.index(c)]
 			file.write(newChar)
 
+class ColumnarTranspositionCipher(Cipher):
+	""" 
+	    In the Columnar Transposition cipher,
+
+	    Sources:
+	        www.practicalcryptography.com/ciphers/classical-era/columnar-transposition/
+
+	"""
+	lettersInKeyword = []
+	columns = {}
+
+	def getKey(self):
+		""" Retrieves the user's desired keyword. """
+		keyword = ""
+		while not keyword.isalpha():
+			keyword = input("Keyword: ")	
+			if not keyword.isalpha():
+				print("Invalid key: The key should only contain letters")
+
+		for c in keyword:
+			self.lettersInKeyword.append(c)
+			self.columns[c] = []
+
+
+
+	def encipher(self, oldFileText, file):
+		""" 
+		    Encrypts the file by .  
+
+		    Parameters
+		    ----------
+		    oldFileText : str
+		        The text from the input text file to be encrypted
+		    file : file
+		        The input text file which will be overwritten with
+		        encrypted text
+
+		"""
+		self.getKey()
+		i = 0
+		for c in oldFileText:
+			currentKeyChar = self.lettersInKeyword[i]
+			currentList = self.columns.get(currentKeyChar)
+			currentList.append(c)
+			self.columns[currentKeyChar] = currentList
+			i = (i + 1) % len(self.lettersInKeyword)
+
+		# Pads the remaining columns if necessary
+		while i != 0:
+			currentKeyChar = self.lettersInKeyword[i]
+			currentList = self.columns.get(currentKeyChar)
+			currentList.append('X')
+			self.columns[currentKeyChar] = currentList
+			i = (i + 1) % len(self.lettersInKeyword)
+
+		self.lettersInKeyword.sort()
+		for letter in self.lettersInKeyword:
+			currentColumn = self.columns.get(letter)
+			if currentColumn is not None:
+				for c in currentColumn:
+					file.write(c)
+			
+
+	def decipher(self, oldFileText, file):
+		""" 
+		    Decrypts the file by .  
+
+		    Parameters
+		    ----------
+		    oldFileText : str
+		        The text from the input text file to be decrypted
+		    file : file
+		        The input text file which will be overwritten with
+		        decrypted text
+
+		"""
+		self.getKey()
+		lettersInKeywordCopy = self.lettersInKeyword.copy()
+		lettersInKeywordCopy.sort()
+		columnSize = ceil(len(oldFileText) / len(self.lettersInKeyword))
+
+		keywordCharsIndex = -1
+		currentKeyChar = None
+		for textIndex in range(0, len(oldFileText)):
+			if textIndex % columnSize == 0:
+				keywordCharsIndex += 1
+				currentKeyChar = lettersInKeywordCopy[keywordCharsIndex]
+			currentTextChar = oldFileText[textIndex]
+			currentList = self.columns.get(currentKeyChar)
+			currentList.append(currentTextChar)
+			self.columns[currentKeyChar] = currentList
+
+		for row in range(0, columnSize):
+			for letter in self.lettersInKeyword:
+				currentList = self.columns.get(letter)
+				file.write(currentList[row])
+
 
 # --- click command-line interface code ----------------------------	
 
@@ -412,8 +511,9 @@ def classicCiphers():
 @click.option('-af', is_flag=True, help='use the Affine cipher')
 @click.option('-at', is_flag=True, help='use the Atbash cipher')
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
+@click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
 @click.argument('file', type=click.Path(exists=True))
-def encrypt(c, v, af, at, s, **f):
+def encrypt(c, v, af, at, s, t, **f):
 	""" Encrypts a file using one of the available ciphers. """
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -434,6 +534,8 @@ def encrypt(c, v, af, at, s, **f):
 			cipher = AtbashCipher()
 		elif s == True:
 			cipher = SimpleSubstitutionCipher()
+		elif t == True:
+			cipher = ColumnarTranspositionCipher()
 
 		if cipher is not None:
 			cipher.encipher(oldFileText, file)
@@ -450,8 +552,9 @@ def encrypt(c, v, af, at, s, **f):
 @click.option('-af', is_flag=True, help='use the Affine cipher')
 @click.option('-at', is_flag=True, help='use the Atbash cipher')
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
+@click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
 @click.argument('file', type=click.Path(exists=True))
-def decrypt(c, v, af, at, s, **f):
+def decrypt(c, v, af, at, s, t, **f):
 	""" Decrypts a file using one of the available ciphers. """
 	file = open(f.get('file'), 'r')
 	oldFileText = file.read().upper()
@@ -472,6 +575,8 @@ def decrypt(c, v, af, at, s, **f):
 			cipher = AtbashCipher()
 		elif s == True:
 			cipher = SimpleSubstitutionCipher()
+		elif t == True:
+			cipher = ColumnarTranspositionCipher()
 
 		if cipher is not None:
 			cipher.decipher(oldFileText, file)
