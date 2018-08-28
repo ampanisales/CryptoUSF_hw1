@@ -95,7 +95,7 @@ Example Usage:
 py classicCiphers.py encrypt -c --key=3 input.txt output.txt
 
 # To decrypt a file using the Caesar cipher
-py classicCiphers.py decrypt -c -k =3 input.txt output.txt
+py classicCiphers.py decrypt -c -k 3 input.txt output.txt
 
 # To encrypt a file using the Affine cipher
 py classicCiphers.py encrypt -af -a 3 -b 11 input.txt output.txt
