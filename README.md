@@ -53,7 +53,7 @@ Commands:
 
 Encrypt Command Help:
 ```
-Usage: classicCiphers.py encrypt [OPTIONS] FILE
+Usage: classicCiphers.py encrypt [OPTIONS] INPUT_FILE OUTPUT_FILE
 
   Encrypts a file using one of the available ciphers.
 
@@ -72,7 +72,7 @@ Options:
 
 Decrypt Command Help:
 ```
-Usage: classicCiphers.py decrypt [OPTIONS] FILE
+Usage: classicCiphers.py decrypt [OPTIONS] INPUT_FILE OUTPUT_FILE
 
   Decrypts a file using one of the available ciphers.
 
