@@ -9,6 +9,7 @@ A Python command-line program to encrypt or decrypt a text file.
     - the Affine cipher
     - the Atbash cipher
     - the Simple Substitution cipher
+    - the Simple Columnar Transposition cipher
 - Built using Python 3.6.4
 - Libraries used:
     - click: used to provide functionality for command line commands and option flags.
