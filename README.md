@@ -65,8 +65,8 @@ Options:
   -s              use the Simple Substitution cipher
   -t              use the Columnar Transposition cipher
   -k, --key TEXT  The key needed for the cipher
-  --a TEXT        The 'a' variable need for the Affine cipher
-  --b TEXT        The 'b' variable need for the Affine cipher
+  --a TEXT        The 'a' variable needed for the Affine cipher
+  --b TEXT        The 'b' variable needed for the Affine cipher
   -h, --help      Show this message and exit.
 ```
 
@@ -84,8 +84,8 @@ Options:
   -s              use the Simple Substitution cipher
   -t              use the Columnar Transposition cipher
   -k, --key TEXT  The key needed for the cipher
-  --a TEXT        The 'a' variable need for the Affine cipher
-  --b TEXT        The 'b' variable need for the Affine cipher
+  --a TEXT        The 'a' variable needed for the Affine cipher
+  --b TEXT        The 'b' variable needed for the Affine cipher
   -h, --help      Show this message and exit.
 ```
 
