@@ -92,20 +92,20 @@ Options:
 Example Usage:
 ```
 # To encrypt a file using the Caesar cipher
-py classicCiphers.py encrypt -c --key=3 test.txt
+py classicCiphers.py encrypt -c --key=3 input.txt output.txt
 
 # To decrypt a file using the Caesar cipher
-py classicCiphers.py decrypt -c --key=3 test.txt
+py classicCiphers.py decrypt -c --key=3 input.txt output.txt
 
 # To encrypt a file using the Affine cipher
-py classicCiphers.py encrypt -af --a=3 --b=11 test.txt
+py classicCiphers.py encrypt -af --a=3 --b=11 input.txt output.txt
 
 # To decrypt a file using the Affine cipher
-py classicCiphers.py decrypt -af --a=3 --b=11 test.txt
+py classicCiphers.py decrypt -af --a=3 --b=11 input.txt output.txt
 
 # To encrypt a file using the Vigenere cipher
-py classicCiphers.py encrypt -v --key=point test.txt
+py classicCiphers.py encrypt -v --key=point input.txt output.txt
 
 # To decrypt a file using the Vigenere cipher
-py classicCiphers.py decrypt -v --key=point test.txt
+py classicCiphers.py decrypt -v --key=point input.txt output.txt
 ```
