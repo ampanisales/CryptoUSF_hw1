@@ -73,7 +73,7 @@ class CaesarCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be encrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        encrypted text
 
 		"""
@@ -96,7 +96,7 @@ class CaesarCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be decrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        decrypted text
 
 		"""
@@ -149,7 +149,7 @@ class VigenereCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be encrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        encrypted text
 
 		"""
@@ -172,7 +172,7 @@ class VigenereCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be decrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        decrypted text
 
 		"""
@@ -263,7 +263,7 @@ class AffineCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be encrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        encrypted text
 
 		"""
@@ -285,7 +285,7 @@ class AffineCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be decrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        decrypted text
 
 		"""
@@ -323,7 +323,7 @@ class AtbashCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be encrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        encrypted text
 
 		"""
@@ -343,7 +343,7 @@ class AtbashCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be decrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        decrypted text
 
 		"""
@@ -403,7 +403,7 @@ class SimpleSubstitutionCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be encrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        encrypted text
 
 		"""
@@ -424,7 +424,7 @@ class SimpleSubstitutionCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be decrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        decrypted text
 
 		"""
@@ -485,7 +485,7 @@ class ColumnarTranspositionCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be encrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        encrypted text
 
 		"""
@@ -523,7 +523,7 @@ class ColumnarTranspositionCipher(Cipher):
 		    oldFileText : str
 		        The text from the input text file to be decrypted
 		    file : file
-		        The input text file which will be overwritten with
+		        The output text file which will contain the
 		        decrypted text
 
 		"""
