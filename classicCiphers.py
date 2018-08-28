@@ -567,39 +567,35 @@ def classicCiphers():
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
 @click.option('-k', '--key', help='The key needed for the cipher')
-@click.option('--a', help='The \'a\' variable needed for the Affine cipher')
-@click.option('--b', help='The \'b\' variable needed for the Affine cipher')
-@click.argument('file', type=click.Path(exists=True))
-def encrypt(c, v, af, at, s, t, key, a, b, **f):
+@click.option('-a', help='The \'a\' variable needed for the Affine cipher')
+@click.option('-b', help='The \'b\' variable needed for the Affine cipher')
+@click.argument('input_file', type=click.Path(exists=True))
+@click.argument('output_file', type=click.Path(exists=True))
+def encrypt(c, v, af, at, s, t, key, a, b, input_file, output_file):
 	""" Encrypts a file using one of the available ciphers. """
-	file = open(f.get('file'), 'r')
+	file = open(input_file, 'r')
 	oldFileText = file.read().upper()
 	file.close()
 
-	file = open(f.get('file'), 'w')
+	file = open(output_file, 'w')
 
 	cipher = None
-	
-	try:
-		if c == True:
-			cipher = CaesarCipher(key)
-		elif v == True:
-			cipher = VigenereCipher(key)
-		elif af == True:
-			cipher = AffineCipher(a, b)
-		elif at == True:
-			cipher = AtbashCipher()
-		elif s == True:
-			cipher = SimpleSubstitutionCipher(key)
-		elif t == True:
-			cipher = ColumnarTranspositionCipher(key)
 
-		if cipher is not None:
-			cipher.encipher(oldFileText, file)
-		else:
-			file.write(oldFileText)
-	except KeyboardInterrupt:
-		file.write(oldFileText)
+	if c == True:
+		cipher = CaesarCipher(key)
+	elif v == True:
+		cipher = VigenereCipher(key)
+	elif af == True:
+		cipher = AffineCipher(a, b)
+	elif at == True:
+		cipher = AtbashCipher()
+	elif s == True:
+		cipher = SimpleSubstitutionCipher(key)
+	elif t == True:
+		cipher = ColumnarTranspositionCipher(key)
+
+	if cipher is not None:
+		cipher.encipher(oldFileText, file)
 
 	file.close()
 
@@ -611,39 +607,35 @@ def encrypt(c, v, af, at, s, t, key, a, b, **f):
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
 @click.option('-k', '--key', help='The key needed for the cipher')
-@click.option('--a', help='The \'a\' variable needed for the Affine cipher')
-@click.option('--b', help='The \'b\' variable needed for the Affine cipher')
-@click.argument('file', type=click.Path(exists=True))
-def decrypt(c, v, af, at, s, t, key, a, b, **f):
+@click.option('-a', help='The \'a\' variable needed for the Affine cipher')
+@click.option('-b', help='The \'b\' variable needed for the Affine cipher')
+@click.argument('input_file', type=click.Path(exists=True))
+@click.argument('output_file', type=click.Path(exists=True))
+def decrypt(c, v, af, at, s, t, key, a, b, input_file, output_file):
 	""" Decrypts a file using one of the available ciphers. """
-	file = open(f.get('file'), 'r')
+	file = open(input_file, 'r')
 	oldFileText = file.read().upper()
 	file.close()
 
-	file = open(f.get('file'), 'w')
+	file = open(output_file, 'w')
 
 	cipher = None
 
-	try:
-		if c == True:
-			cipher = CaesarCipher(key)
-		elif v == True:
-			cipher = VigenereCipher(key)
-		elif af == True:
-			cipher = AffineCipher(a, b)
-		elif at == True:
-			cipher = AtbashCipher()
-		elif s == True:
-			cipher = SimpleSubstitutionCipher(key)
-		elif t == True:
-			cipher = ColumnarTranspositionCipher(key)
+	if c == True:
+		cipher = CaesarCipher(key)
+	elif v == True:
+		cipher = VigenereCipher(key)
+	elif af == True:
+		cipher = AffineCipher(a, b)
+	elif at == True:
+		cipher = AtbashCipher()
+	elif s == True:
+		cipher = SimpleSubstitutionCipher(key)
+	elif t == True:
+		cipher = ColumnarTranspositionCipher(key)
 
-		if cipher is not None:
-			cipher.decipher(oldFileText, file)
-		else:
-			file.write(oldFileText)
-	except KeyboardInterrupt:
-		file.write(oldFileText)
+	if cipher is not None:
+		cipher.decipher(oldFileText, file)
 
 	file.close()
 
