@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """ classicCiphers.py
+
     A Python command-line program to encrypt or decrypt a text file. 
     This tool is able to use a variety of ciphers to accomplish encryption
     or decryption. Specifically, the ciphers are:
@@ -579,23 +580,37 @@ def encrypt(c, v, af, at, s, t, key, a, b, input_file, output_file):
 
 	file = open(output_file, 'w')
 
+	trueCount = 0
 	cipher = None
 
 	if c == True:
+		trueCount += 1
 		cipher = CaesarCipher(key)
-	elif v == True:
+	
+	if v == True:
+		trueCount += 1
 		cipher = VigenereCipher(key)
-	elif af == True:
+	
+	if af == True:
+		trueCount += 1
 		cipher = AffineCipher(a, b)
-	elif at == True:
+
+	if at == True:
+		trueCount += 1
 		cipher = AtbashCipher()
-	elif s == True:
+
+	if s == True:
+		trueCount += 1
 		cipher = SimpleSubstitutionCipher(key)
-	elif t == True:
+
+	if t == True:
+		trueCount += 1
 		cipher = ColumnarTranspositionCipher(key)
 
-	if cipher is not None:
+	if cipher is not None and trueCount is 1:
 		cipher.encipher(oldFileText, file)
+	elif trueCount > 1:
+		print("ERROR: More than one cipher selected")
 
 	file.close()
 
@@ -619,23 +634,37 @@ def decrypt(c, v, af, at, s, t, key, a, b, input_file, output_file):
 
 	file = open(output_file, 'w')
 
+	trueCount = 0
 	cipher = None
 
 	if c == True:
+		trueCount += 1
 		cipher = CaesarCipher(key)
-	elif v == True:
+	
+	if v == True:
+		trueCount += 1
 		cipher = VigenereCipher(key)
-	elif af == True:
+	
+	if af == True:
+		trueCount += 1
 		cipher = AffineCipher(a, b)
-	elif at == True:
+
+	if at == True:
+		trueCount += 1
 		cipher = AtbashCipher()
-	elif s == True:
+
+	if s == True:
+		trueCount += 1
 		cipher = SimpleSubstitutionCipher(key)
-	elif t == True:
+
+	if t == True:
+		trueCount += 1
 		cipher = ColumnarTranspositionCipher(key)
 
-	if cipher is not None:
+	if cipher is not None and trueCount is 1:
 		cipher.decipher(oldFileText, file)
+	elif trueCount > 1:
+		print("ERROR: More than one cipher selected")
 
 	file.close()
 
