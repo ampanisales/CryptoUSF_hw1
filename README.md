@@ -57,12 +57,16 @@ Usage: classicCiphers.py encrypt [OPTIONS] FILE
   Encrypts a file using one of the available ciphers.
 
 Options:
-  -c          use the Caesar cipher
-  -v          use the Vigenere cipher
-  -af         use the Affine cipher
-  -at         use the Atbash cipher
-  -s          use the Simple Substitution cipher
-  -h, --help  Show this message and exit.
+  -c              use the Caesar cipher
+  -v              use the Vigenere cipher
+  -af             use the Affine cipher
+  -at             use the Atbash cipher
+  -s              use the Simple Substitution cipher
+  -t              use the Columnar Transposition cipher
+  -k, --key TEXT  The key needed for the cipher
+  --a TEXT        The 'a' variable need for the Affine cipher
+  --b TEXT        The 'b' variable need for the Affine cipher
+  -h, --help      Show this message and exit.
 ```
 
 Decrypt Command Help:
@@ -72,12 +76,16 @@ Usage: classicCiphers.py decrypt [OPTIONS] FILE
   Decrypts a file using one of the available ciphers.
 
 Options:
-  -c          use the Caesar cipher
-  -v          use the Vigenere cipher
-  -af         use the Affine cipher
-  -at         use the Atbash cipher
-  -s          use the Simple Substitution cipher
-  -h, --help  Show this message and exit.
+  -c              use the Caesar cipher
+  -v              use the Vigenere cipher
+  -af             use the Affine cipher
+  -at             use the Atbash cipher
+  -s              use the Simple Substitution cipher
+  -t              use the Columnar Transposition cipher
+  -k, --key TEXT  The key needed for the cipher
+  --a TEXT        The 'a' variable need for the Affine cipher
+  --b TEXT        The 'b' variable need for the Affine cipher
+  -h, --help      Show this message and exit.
 ```
 
 Example Usage:
