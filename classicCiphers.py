@@ -566,9 +566,9 @@ def classicCiphers():
 @click.option('-at', is_flag=True, help='use the Atbash cipher')
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
-@click.option('-k', '--key', help='The key needed for the cipher.')
-@click.option('--a', help='The \'a\' variable need for the Affine cipher')
-@click.option('--b', help='The \'b\' variable need for the Affine cipher')
+@click.option('-k', '--key', help='The key needed for the cipher')
+@click.option('--a', help='The \'a\' variable needed for the Affine cipher')
+@click.option('--b', help='The \'b\' variable needed for the Affine cipher')
 @click.argument('file', type=click.Path(exists=True))
 def encrypt(c, v, af, at, s, t, key, a, b, **f):
 	""" Encrypts a file using one of the available ciphers. """
@@ -610,9 +610,9 @@ def encrypt(c, v, af, at, s, t, key, a, b, **f):
 @click.option('-at', is_flag=True, help='use the Atbash cipher')
 @click.option('-s', is_flag=True, help='use the Simple Substitution cipher')
 @click.option('-t', is_flag=True, help='use the Columnar Transposition cipher')
-@click.option('-k', '--key', help='The key needed for the cipher.')
-@click.option('--a', help='The \'a\' variable need for the Affine cipher')
-@click.option('--b', help='The \'b\' variable need for the Affine cipher')
+@click.option('-k', '--key', help='The key needed for the cipher')
+@click.option('--a', help='The \'a\' variable needed for the Affine cipher')
+@click.option('--b', help='The \'b\' variable needed for the Affine cipher')
 @click.argument('file', type=click.Path(exists=True))
 def decrypt(c, v, af, at, s, t, key, a, b, **f):
 	""" Decrypts a file using one of the available ciphers. """
