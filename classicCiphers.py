@@ -16,8 +16,8 @@ __author__ = "Anthony Panisales"
 
 """
 
-from math import ceil
 import click
+import math
 
 class Cipher(object):
 	""" Base class for the ciphers. """
@@ -530,7 +530,7 @@ class ColumnarTranspositionCipher(Cipher):
 		self.getKey()
 		lettersInKeywordCopy = self.lettersInKeyword.copy()
 		lettersInKeywordCopy.sort()
-		columnSize = ceil(len(oldFileText) / len(self.lettersInKeyword))
+		columnSize = math.ceil(len(oldFileText) / len(self.lettersInKeyword))
 
 		keywordCharsIndex = -1
 		currentKeyChar = None
