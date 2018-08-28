@@ -15,7 +15,7 @@ A Python command-line program to encrypt or decrypt a text file.
     - click: used to provide functionality for command line commands and option flags.
     - math: used for its ceil function which is used in the simple columnar transposition cipher to get the column sizes
 - Sources:
-    - Caesar Cipher:
+    - Caesar cipher:
         - "Manual of Cryptography", 1911, page 28
 	    - https://www.tutorialspoint.com/cryptography/traditional_ciphers.htm
 	    - http://www.practicalcryptography.com/ciphers/caesar-cipher/
