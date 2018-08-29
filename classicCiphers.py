@@ -611,6 +611,8 @@ def encrypt(c, v, af, at, s, t, key, a, b, input_file, output_file):
 		cipher.encipher(oldFileText, file)
 	elif trueCount > 1:
 		print("ERROR: More than one cipher selected")
+	elif trueCount is 0:
+		print("ERROR: No cipher selected")
 
 	file.close()
 
@@ -665,6 +667,8 @@ def decrypt(c, v, af, at, s, t, key, a, b, input_file, output_file):
 		cipher.decipher(oldFileText, file)
 	elif trueCount > 1:
 		print("ERROR: More than one cipher selected")
+	elif trueCount is 0:
+		print("ERROR: No cipher selected")
 
 	file.close()
 
