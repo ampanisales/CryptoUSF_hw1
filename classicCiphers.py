@@ -211,7 +211,6 @@ class AffineCipher(Cipher):
 	"""
 	a = 0
 	b = 0
-	argKey = None
 
 	def __init__(self, a, b):
 		self.a = a
@@ -348,6 +347,7 @@ class AtbashCipher(Cipher):
 		        decrypted text
 
 		"""
+		# The reversing process is already in the encipher method.
 		self.encipher(oldFileText, file)
 
 
