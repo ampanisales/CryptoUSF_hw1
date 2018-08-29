@@ -54,6 +54,7 @@ class CaesarCipher(Cipher):
 					shift = int(input("Shift value (0-25): "))	
 				if shift < 0 or shift > 25:
 					print("Invalid value")
+					self.argKey = None
 					continue
 				else:
 					return shift      
@@ -126,17 +127,17 @@ class VigenereCipher(Cipher):
 	argKey = None
 
 	def __init__(self, key):
-		self.argKey = key.upper()
+		self.argKey = key
 
 	def getKey(self):
 		""" Retrieves the user's desired keyword. """
 		keyword = self.argKey
-		if not keyword.isalpha():
-			print("Invalid key: The key should only contain letters")
 		while keyword is None or not keyword.isalpha():
 			keyword = input("Keyword: ").upper()	
 			if not keyword.isalpha():
 				print("Invalid key: The key should only contain letters")
+
+		keyword = keyword.upper()
 
 		for c in keyword:
 			self.keyPositions.append(self.letters.index(c))
@@ -225,13 +226,13 @@ class AffineCipher(Cipher):
 				else:
 					self.a = int(self.a)
 				if self.a < 0 or self.a % 2 == 0 or self.a == 13:
-					print("Invalid key: Must be a positive number less than and has no common factors with 26")
+					print("Invalid \'a\' value: Must be a positive number less than and has no common factors with 26")
 					self.a = None
 					continue
 				else:
 					break     
 			except ValueError:
-				print("Invalid key: Must be a positive number less than and has no common factors with 26")
+				print("Invalid \'a\' value: Must be a positive number less than and has no common factors with 26")
 				self.a = None
 				continue
 
@@ -242,13 +243,13 @@ class AffineCipher(Cipher):
 				else:
 					self.b = int(self.b)
 				if self.b < 0 or self.b > 25:
-					print("Invalid key")
+					print("Invalid \'b\' value")
 					self.b = None
 					continue
 				else:
 					return      
 			except ValueError:
-				print("Invalid key")
+				print("Invalid \'b\' value")
 				self.b = None
 				continue
 
@@ -499,7 +500,7 @@ class ColumnarTranspositionCipher(Cipher):
 			self.columns[currentKeyChar] = currentList
 			i = (i + 1) % len(self.lettersInKeyword)
 
-		# Pads the remaining columns if necessary
+		# Pads the remaining columns if necessary with 'X'
 		while i != 0:
 			currentKeyChar = self.lettersInKeyword[i]
 			currentList = self.columns.get(currentKeyChar)
